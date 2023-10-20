@@ -1,0 +1,101 @@
+.\"-
+.\" Copyright (c) 2023 Klara, Inc.
+.\"
+.\" SPDX-License-Identifier: BSD-2-Clause
+.\"
+.Dd October 20, 2023
+.Dt TACPLUS 8
+.Os
+.Sh NAME
+.Nm tacplus
+.Nd TACACS+ user lookup
+.Sh SYNOPSIS
+.Nm
+.Op Fl v
+.Op Fl m Ar method
+.Op Fl t Ar type
+.Op Fl s Ar service
+.Op Ar attr Ns = Ns Ar value Op Ar ...
+.Ar name
+.Sh DESCRIPTION
+The
+.Nm
+utility performs a TACACS+ authorization request and terminates
+successfully if the request was approved.
+.Pp
+The following options are available:
+.Bl -tag -width Fl
+.It Fl m Ar method
+The value to use for the
+.Va authen_method
+field in the authorization request:
+.Dq notset ,
+.Dq none ,
+.Dq krb5 ,
+.Dq line ,
+.Dq enable ,
+.Dq local ,
+.Dq tacacsplus ,
+or
+.Dq rcmd .
+The default is
+.Dq notset .
+.It Fl s Ar service
+The value to use for the
+.Va authen_service
+field in the authorization request:
+.Dq none ,
+.Dq login ,
+.Dq enable ,
+.Dq ppp ,
+.Dq arap ,
+.Dq pt ,
+.Dq rcmd ,
+.Dq x25 ,
+.Dq nasi ,
+or
+.Dq fwproxy .
+The default is
+.Dq none .
+.It Fl t Ar type
+The value to use for the
+.Va authen_type
+field in the authorization request:
+.Dq notset ,
+.Dq ascii ,
+.Dq pap ,
+.Dq chap ,
+.Dq arap ,
+or
+.Dq mschap .
+The default is
+.Dq notset .
+.It Fl v
+Enable verbose reports.
+.El
+.Pp
+At least one positional parameter, the name of the user to look up, is
+required.
+Any positional parameters preceding it must be attribute-value pairs
+which are added as-is to the request.
+.Sh EXAMPLES
+To look up the user
+.Dq des
+using the exact same type of request used by
+.Xr nss_tacplus 8 , 
+use
+.Bd -literal -offset indent
+tacplus -s login service=shell des
+.Ed
+.Sh SEE ALSO
+.Xr libtacplus 3 ,
+.Xr tacplus.conf 5 ,
+.Xr nss_tacplus 8 ,
+.Xr pam_tacplus 8
+.Sh HISTORY
+.An -nosplit
+The
+.Nm
+utility and this manual page were written by
+.An Dag-Erling Smørgrav Aq Mt des@FreeBSD.org
+for Klara Systems.
